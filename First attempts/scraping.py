@@ -7,7 +7,7 @@ import datetime as dt
 
 def scrape_all():
     # Initiate headless driver for deployment
-    browser = Browser("chrome", executable_path="C:/webdrivers/chromedriver.exe", headless=True)
+    browser = Browser("chrome", executable_path="C:/Users/Perry/Downloads/chromedriver_win32 (1)/chromedriver.exe", headless=True)
 
     news_title, news_paragraph = mars_news(browser)
 
@@ -20,7 +20,7 @@ def scrape_all():
         "last_modified": dt.datetime.now()
     }
     #hemispheres dictionary
-    hemispheres = {'url': [], 'title': [] }
+    hemispheres = {'url': img_url, 'title': title }
 
     # Stop webdriver and return data
     browser.quit()
@@ -98,25 +98,25 @@ def mars_facts():
     return df.to_html(classes="table table-striped")
 
 def hemispheres_scraping():
-    hemispheres = []
-    for i in range(4):    
-        url = 'https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'
-        Browser.visit(url)
-        title = str(img_soup.find('h2', class_='title'))
-        title=title.replace('<h2 class="title">', '').replace('</h2>', '')
-        img = Browser.find_by_css('h3')[i]
-        img.click()
-        img2 = Browser.links.find_by_text('Sample')
-        img2.click()
-        html = Browser.html
-        img_soup = soup(html, 'html.parser')
-        title = str(img_soup.find('h2', class_='title'))
-        title = title.replace('<h2 class="title">', '').replace('</h2>', '')
-        img_url_rel = img_soup.find('img', class_ = 'wide-image').get('src')
-        img_url = f'https://astrogeology.usgs.gov/{img_url_rel}'
-        d = {'url': img_url, 'title': title}
-        hemispheres.append(d) 
-        print(hemispheres)
+for i in range(4):    
+    url = 'https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'
+    browser.visit(url)
+    title = str(img_soup.find('h2', class_='title'))
+    title=title.replace('<h2 class="title">', '').replace('</h2>', '')
+    img = browser.find_by_css('h3')[i]
+    img.click()
+    img2 = browser.links.find_by_text('Sample')
+    img2.click()
+    html = browser.html
+    img_soup = soup(html, 'html.parser')
+    title = str(img_soup.find('h2', class_='title'))
+    title = title.replace('<h2 class="title">', '').replace('</h2>', '')
+    img_url_rel = img_soup.find('img', class_ = 'wide-image').get('src')
+    img_url = f'https://astrogeology.usgs.gov/{img_url_rel}'
+    d = {'url': img_url, 'title': title}
+    hemispheres.append(d) 
+
+print(hemispheres)
 
 if __name__ == "__main__":
 
